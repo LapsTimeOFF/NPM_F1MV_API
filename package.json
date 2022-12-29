@@ -1,7 +1,7 @@
 {
     "name": "npm_f1mv",
     "version": "1.0.0",
-    "description": "",
+    "description": "Talk with the MulitiViewer API easily",
     "main": "src/index.ts",
     "scripts": {
         "docs": "typedoc src/index.ts"
@@ -17,5 +17,9 @@
     },
     "dependencies": {
         "node-fetch": "2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/LapsTimeOFF/NPM_F1MV_API"
     }
 }
