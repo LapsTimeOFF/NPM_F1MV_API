@@ -1,13 +1,19 @@
-import Instance from '../src';
-import { Config } from '../src/Types';
+import {
+    Config,
+    discoverF1MVInstances,
+    getAPIVersion,
+    getF1MVVersion,
+} from '../src';
 
-const config: Config = {
-    host: 'localhost',
-    port: 10101,
-};
-
-const F1MV = new Instance(config);
 (async () => {
-    console.log(await F1MV.getF1MVVersion());
-    console.log(await F1MV.getAPIVersion());
+    const { port } = await discoverF1MVInstances('localhost');
+
+    const config: Config = {
+        host: 'localhost',
+        port: port,
+    };
+
+    console.log(await discoverF1MVInstances(config.host));
+    console.log(await getF1MVVersion(config));
+    console.log(await getAPIVersion(config));
 })();
