@@ -4,6 +4,8 @@ import {
     getAPIVersion,
     getF1MVVersion,
     LiveTimingAPIV1,
+    LiveTimingAPIV2,
+    Topic,
 } from '../src';
 
 (async () => {
@@ -18,5 +20,5 @@ import {
     console.log(await getF1MVVersion(config));
     console.log(await getAPIVersion(config));
     console.log(await LiveTimingAPIV1(config, 'TrackStatus'));
-    console.log(await LiveTimingAPIV1(config, 'TrackStatus'));
+    console.log(await LiveTimingAPIV2(config, ['TrackStatus', 'WeatherData']));
 })();

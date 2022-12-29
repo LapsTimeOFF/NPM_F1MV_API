@@ -36,8 +36,8 @@ export async function LiveTimingAPIV2(
 ) {
     const data = await (
         await fetch(
-            `http://${config.host}:${config.port}/api/v2/live-timing/${
-                typeof topic === 'object' ? topic.join(', ') : topic
+            `http://${config.host}:${config.port}/api/v2/live-timing/state/${
+                typeof topic === 'object' ? topic.join(',') : topic
             }`
         )
     ).json();
@@ -48,3 +48,30 @@ export async function LiveTimingAPIV2(
         return data;
     }
 }
+
+/**
+ * Call the Live Timing on GraphQL
+ *
+ * @param config - the config object
+ * @param topic - a Topic or an Array<Topic>
+ * @returns an object
+ */
+export async function LiveTimingAPIGraphQL(
+    config: Config,
+    topic: Topic | Array<Topic>
+) {
+    const data = await (
+        await fetch(`http://localhost:10101/api/graphql`)
+    ).json();
+
+    if (data.success === false) {
+        return invalidTopic;
+    } else {
+        return data;
+    }
+}
+
+// curl --request POST \
+//     --header 'content-type: application/json' \
+//     --url  \
+//     --data '{"query":"query ExampleQuery {\n  liveTimingState {\n    TrackStatus\n  }\n}"}'
