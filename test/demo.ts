@@ -7,6 +7,7 @@ import {
     LiveTimingAPIV2,
     Topic,
 } from '../src';
+import { LiveTimingAPIGraphQL } from '../src/apiCall';
 
 (async () => {
     const { port } = await discoverF1MVInstances('localhost');
@@ -21,4 +22,7 @@ import {
     console.log(await getAPIVersion(config));
     console.log(await LiveTimingAPIV1(config, 'TrackStatus'));
     console.log(await LiveTimingAPIV2(config, ['TrackStatus', 'WeatherData']));
+    console.log(
+        await LiveTimingAPIGraphQL(config, ['TrackStatus', 'WeatherData'])
+    );
 })();

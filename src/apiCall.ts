@@ -60,14 +60,29 @@ export async function LiveTimingAPIGraphQL(
     config: Config,
     topic: Topic | Array<Topic>
 ) {
-    const data = await (
-        await fetch(`http://localhost:10101/api/graphql`)
+    const { data } = await (
+        await fetch(`http://${config.host}:${config.port}/api/graphql`, {
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+                query: `query LiveTimingState {
+                            liveTimingState {
+                                ${
+                                    typeof topic === 'object'
+                                        ? topic.join('\n')
+                                        : topic
+                                }
+                            }
+                        }`,
+                operationName: 'LiveTimingState',
+            }),
+            method: 'POST',
+        })
     ).json();
 
     if (data.success === false) {
         return invalidTopic;
     } else {
-        return data;
+        return data.liveTimingState;
     }
 }
 
