@@ -2,8 +2,8 @@ name: Publish Typedoc to Github Pages
 on:
   push:
     branches:
-      - main
-      - master
+      - stable
+      
 jobs:
   publish:
     runs-on: ubuntu-latest
