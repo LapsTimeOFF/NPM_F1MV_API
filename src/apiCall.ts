@@ -6,6 +6,7 @@ import { Config, Topic } from './Types';
  *
  * @deprecated
  * @param config - the config object
+ * @param topic - a Topic
  * @returns an object
  */
 export async function LiveTimingAPIV1(config: Config, topic: Topic) {
@@ -29,10 +30,15 @@ export async function LiveTimingAPIV1(config: Config, topic: Topic) {
  * @param topic - a Topic or an Array<Topic>
  * @returns an object
  */
-export async function LiveTimingAPIV2(config: Config, topic: Topic | Array<Topic>) {
+export async function LiveTimingAPIV2(
+    config: Config,
+    topic: Topic | Array<Topic>
+) {
     const data = await (
         await fetch(
-            `http://${config.host}:${config.port}/api/v1/live-timing/${topic}`
+            `http://${config.host}:${config.port}/api/v2/live-timing/${
+                typeof topic === 'object' ? topic.join(', ') : topic
+            }`
         )
     ).json();
 

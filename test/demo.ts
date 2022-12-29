@@ -17,6 +17,6 @@ import {
     console.log(await discoverF1MVInstances(config.host));
     console.log(await getF1MVVersion(config));
     console.log(await getAPIVersion(config));
-    console.log(await LiveTimingAPIV1(config, 'RaceControlMessages'));
-    
+    console.log(await LiveTimingAPIV1(config, 'TrackStatus'));
+    console.log(await LiveTimingAPIV1(config, 'TrackStatus'));
 })();
