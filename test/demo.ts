@@ -5,9 +5,8 @@ import {
     getF1MVVersion,
     LiveTimingAPIV1,
     LiveTimingAPIV2,
-    Topic,
+    LiveTimingAPIGraphQL,
 } from '../src';
-import { LiveTimingAPIGraphQL } from '../src/apiCall';
 
 (async () => {
     const { port } = await discoverF1MVInstances('localhost');
