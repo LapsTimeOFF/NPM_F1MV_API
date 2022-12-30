@@ -35,7 +35,7 @@ jobs:
         uses: actions/setup-node@v3.5.1
       
       - name: Build the docs
-        run: npx typedocs src/index.ts
+        run: npm run docs
       
       - name: Setup Pages
         uses: actions/configure-pages@v2
