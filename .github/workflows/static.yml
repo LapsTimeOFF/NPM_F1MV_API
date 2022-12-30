@@ -34,6 +34,9 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.5.1
       
+      - name: Install typedocs
+        run: npm i typedocs
+      
       - name: Build the docs
         run: npm run docs
       
