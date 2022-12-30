@@ -65,7 +65,7 @@ import {
 
 ### Docs
 
-See the [auto-generated docs](https://lapstimeoff.github.io/NPM_F1MV_API/modules.html) for more info on methods and parameters.
+See the [auto-generated docs](https://lapstimeoff.github.io/NPM_F1MV_API/) for more info on methods and parameters.
 
 ### Demos
 

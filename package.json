@@ -5,7 +5,8 @@
     "main": "dist/index.js",
     "module": "dist/index.d.ts",
     "scripts": {
-        "docs": "typedoc src/index.ts"
+        "docs": "typedoc src/index.ts",
+        "build": "tsc"
     },
     "keywords": [],
     "author": "LapsTime",
