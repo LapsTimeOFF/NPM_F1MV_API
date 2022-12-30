@@ -19,5 +19,8 @@
     "dependencies": {
         "node-fetch": "2"
     },
-    "repository": "https://github.com/LapsTimeOFF/NPM_F1MV_API.git"
+    "repository": "https://github.com/LapsTimeOFF/NPM_F1MV_API.git",
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
+    }
 }
