@@ -1,5 +1,5 @@
 import { invalidTopic } from './Errors';
-import { Config, Topic } from './Types';
+import { ClockTopic, Config, Topic } from './Types';
 
 /**
  * Call the Live Timing on V1 [DEPRECATED]
@@ -83,6 +83,43 @@ export async function LiveTimingAPIGraphQL(
         return invalidTopic;
     } else {
         return data.liveTimingState;
+    }
+}
+
+/**
+ * Call the Live Timing on GraphQL
+ *
+ * @param config - the config object
+ * @param topic - a Topic or an Array<Topic>
+ * @returns an object
+ */
+export async function LiveTimingClockAPIGraphQL(
+    config: Config,
+    topic: ClockTopic | Array<ClockTopic>
+) {
+    const { data } = await (
+        await fetch(`http://${config.host}:${config.port}/api/graphql`, {
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+                query: `query LiveTimingClock {
+                            liveTimingClock {
+                                ${
+                                    typeof topic === 'object'
+                                        ? topic.join('\n')
+                                        : topic
+                                }
+                            }
+                        }`,
+                operationName: 'LiveTimingClock',
+            }),
+            method: 'POST',
+        })
+    ).json();
+
+    if (data.success === false) {
+        return invalidTopic;
+    } else {
+        return data.liveTimingClock;
     }
 }
 

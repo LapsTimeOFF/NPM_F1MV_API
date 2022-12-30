@@ -28,3 +28,9 @@ export type Topic =
     | 'TrackStatus'
     | 'WeatherData'
     | 'WeatherDataSeries';
+
+export type ClockTopic =
+    | 'paused'
+    | 'systemTime'
+    | 'trackTime'
+    | 'liveTimingStartTime';
