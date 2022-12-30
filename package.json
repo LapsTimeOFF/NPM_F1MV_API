@@ -1,5 +1,5 @@
 {
-    "name": "@lapstimeoff/npm_f1mv_api",
+    "name": "npm_f1mv_api",
     "version": "1.1.1",
     "description": "Talk with the MulitiViewer API easily",
     "main": "dist/index.js",

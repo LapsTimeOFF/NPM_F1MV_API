@@ -20,7 +20,7 @@ You can use it to start building projects using the MultiViewer Live Timing API.
 ## Install
 
 ```bash
-npm install @lapstimeoff/npm_f1mv_api
+npm install npm_f1mv_api
 ```
 
 ## Usage
