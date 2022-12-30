@@ -33,7 +33,7 @@ import {
     LiveTimingAPIV1,
     LiveTimingAPIV2,
     LiveTimingAPIGraphQL,
-} from "npm_f1mv";
+} from "npm_f1mv_api";
 
 (async () => {
     let port;
