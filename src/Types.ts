@@ -1,9 +1,9 @@
-export type Config = {
+type Config = {
     host: string;
     port: number | string;
 };
 
-export type Topic =
+type Topic =
     | 'ArchiveStatus'
     | 'AudioStreams'
     | 'CarData'
@@ -29,8 +29,6 @@ export type Topic =
     | 'WeatherData'
     | 'WeatherDataSeries';
 
-export type ClockTopic =
-    | 'paused'
-    | 'systemTime'
-    | 'trackTime'
-    | 'liveTimingStartTime';
+type ClockTopic = 'paused' | 'systemTime' | 'trackTime' | 'liveTimingStartTime';
+
+export { Config, Topic, ClockTopic };
