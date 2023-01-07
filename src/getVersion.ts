@@ -6,13 +6,23 @@ export async function getF1MVVersion(config: Config) {
     const response = await fetch(URL);
     const data = await response.json();
 
-    let ver = data.version;
-    ver = parseInt(ver.replace(/[\D]/g, ''));
-    return ver;
+    let { version } = data;
+    version = parseInt(version.replace(/[\D]/g, ''));
+    return version;
 }
 
-export async function getAPIVersion(config: Config) {
-    let data = await getF1MVVersion(config);
+export async function getAPIVersion(
+    config: Config,
+    ignoreConfig?: boolean,
+    versionToTest?: number
+) {
+    let data;
+
+    if(!ignoreConfig) {
+        data = await getF1MVVersion(config);
+    } else {
+        data = versionToTest;
+    }
 
     if (data >= 180 && data < 1100) {
         return 'v2';

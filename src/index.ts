@@ -6,7 +6,7 @@ import {
     LiveTimingAPIV1,
     LiveTimingAPIV2,
     LiveTimingClockAPIGraphQL,
-} from './apiCall';
+} from './LiveTimingAPI';
 import { testConnection } from './connection';
 import { noInstanceFounded, invalidTopic } from './Errors';
 
