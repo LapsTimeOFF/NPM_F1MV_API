@@ -14,10 +14,11 @@ export async function getFIA_Documents(year: Year): Promise<object> {
 }
 
 /**
- * Get all the FIA Documents of a specific year
- * @param year - Year of the wanted documents
+ * Get all the infos of a specific circuit
+ * @param cicuitId - Id of the wanted circuit
+ * @param year - For a specific year
  */
-export async function getCircuitsInfo(
+export async function getCircuitInfo(
     cicuitId: number,
     year: Year
 ): Promise<object> {
