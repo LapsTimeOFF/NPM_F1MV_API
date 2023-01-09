@@ -31,4 +31,6 @@ type Topic =
 
 type ClockTopic = 'paused' | 'systemTime' | 'trackTime' | 'liveTimingStartTime';
 
-export { Config, Topic, ClockTopic };
+type Year = '2019' | '2020' | '2021' | '2022';
+
+export { Config, Topic, ClockTopic, Year };
