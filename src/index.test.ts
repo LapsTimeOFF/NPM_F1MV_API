@@ -5,6 +5,11 @@ describe('index', () => {
         expect(functions.getAPIVersion).toBeDefined();
         expect(functions.getFIA_Documents).toBeDefined();
         expect(functions.getCircuitInfo).toBeDefined();
+        expect(functions.getPlayerBounds).toBeDefined();
+        expect(functions.createWindow).toBeDefined();
+        expect(functions.setSpeedometerVisibility).toBeDefined();
+        expect(functions.getAllPlayers).toBeDefined();
+        expect(functions.customGraphQL).toBeDefined();
         expect(functions.getF1MVVersion).toBeDefined();
         expect(functions.discoverF1MVInstances).toBeDefined();
         expect(functions.LiveTimingAPIV1).toBeDefined();

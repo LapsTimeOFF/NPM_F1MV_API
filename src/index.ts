@@ -10,6 +10,13 @@ import {
 import { testConnection } from './connection';
 import { noInstanceFounded, invalidTopic } from './Errors';
 import { getFIA_Documents, getCircuitInfo } from './publicAPI';
+import {
+    createWindow,
+    getAllPlayers,
+    getPlayerBounds,
+    setSpeedometerVisibility,
+} from './Player';
+import { customGraphQL } from './GraphQL';
 
 export {
     Config,
@@ -20,6 +27,11 @@ export {
     getF1MVVersion,
     getFIA_Documents,
     getCircuitInfo,
+    getPlayerBounds,
+    createWindow,
+    setSpeedometerVisibility,
+    getAllPlayers,
+    customGraphQL,
     discoverF1MVInstances,
     LiveTimingAPIV1,
     LiveTimingAPIV2,
