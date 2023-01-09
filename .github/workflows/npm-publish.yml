@@ -36,6 +36,7 @@ jobs:
         with:
           version: latest
       - run: pnpm i
+      - run: pnpm build
       - run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
