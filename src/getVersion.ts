@@ -18,7 +18,7 @@ export async function getAPIVersion(
 ) {
     let data;
 
-    if(!ignoreConfig) {
+    if (!ignoreConfig) {
         data = await getF1MVVersion(config);
     } else {
         data = versionToTest;

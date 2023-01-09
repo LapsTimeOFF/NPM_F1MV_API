@@ -5,7 +5,9 @@ const app = require('express')();
 describe('testConnection', () => {
     it('returns the version if the connection is successful', async () => {
         const server = await app.listen(3031);
-        await app.get('/api/v1/app/version', (_, res) => {res.send({ version: 'TEST' })})
+        await app.get('/api/v1/app/version', (_, res) => {
+            res.send({ version: 'TEST' });
+        });
         const config: Config = { host: 'localhost', port: 3031 };
         const response = await testConnection(config);
         expect(response).toEqual({ version: 'TEST' });

@@ -3,7 +3,6 @@ import express from 'express';
 const app = require('express')();
 
 describe('getF1MVVersion', () => {
-    
     it('returns the version as an integer', async () => {
         let server: express = null;
         server = await app.listen(8081);
@@ -23,13 +22,13 @@ describe('getAPIVersion', () => {
         const response = await getAPIVersion(config, true, 181);
         expect(response).toBe('v2');
     });
-    
+
     it('returns "graphql" if the version is >= 1100', async () => {
         const config = { host: 'localhost', port: 8083 };
         const response = await getAPIVersion(config, true, 1200);
         expect(response).toBe('graphql');
     });
-    
+
     it('returns "v1" if the version is < 180', async () => {
         const config = { host: 'localhost', port: 8084 };
         const response = await getAPIVersion(config, true, 100);
