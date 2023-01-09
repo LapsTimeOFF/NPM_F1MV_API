@@ -1,4 +1,4 @@
-import { ClockTopic, Config, Topic, Year } from './Types';
+import { Bounds, ClockTopic, Config, Topic, Year } from './Types';
 import { getF1MVVersion, getAPIVersion } from './getVersion';
 import { discoverF1MVInstances } from './discoverF1MVInstances';
 import {
@@ -23,6 +23,7 @@ export {
     Topic,
     ClockTopic,
     Year,
+    Bounds,
     getAPIVersion,
     getF1MVVersion,
     getFIA_Documents,
