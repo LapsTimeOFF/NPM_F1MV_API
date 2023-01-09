@@ -4,6 +4,7 @@ describe('index', () => {
     it('exports the correct functions and variables and types', () => {
         expect(functions.getAPIVersion).toBeDefined();
         expect(functions.getFIA_Documents).toBeDefined();
+        expect(functions.getCircuitInfo).toBeDefined();
         expect(functions.getF1MVVersion).toBeDefined();
         expect(functions.discoverF1MVInstances).toBeDefined();
         expect(functions.LiveTimingAPIV1).toBeDefined();

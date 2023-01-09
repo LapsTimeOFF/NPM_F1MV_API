@@ -9,7 +9,7 @@ import {
 } from './LiveTimingAPI';
 import { testConnection } from './connection';
 import { noInstanceFounded, invalidTopic } from './Errors';
-import { getFIA_Documents } from './publicAPI';
+import { getFIA_Documents, getCircuitInfo } from './publicAPI';
 
 export {
     Config,
@@ -19,6 +19,7 @@ export {
     getAPIVersion,
     getF1MVVersion,
     getFIA_Documents,
+    getCircuitInfo,
     discoverF1MVInstances,
     LiveTimingAPIV1,
     LiveTimingAPIV2,
