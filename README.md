@@ -33,6 +33,7 @@ import {
     LiveTimingAPIV1,
     LiveTimingAPIV2,
     LiveTimingAPIGraphQL,
+    Config
 } from "npm_f1mv_api";
 
 (async () => {
@@ -47,7 +48,7 @@ import {
         return;
     }
 
-    const config = {
+    const config: Config = {
         host: "localhost",
         port: port,
     };
