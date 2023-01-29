@@ -1,0 +1,37 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Execute Jest tests
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["stable"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  # Single deploy job since we're just deploying
+  Run-the-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.5.1
+      
+      - name: GitHub Action for npx
+  # You may pin to the exact commit or the version.
+  # uses: mikeal/npx@e7aaefed7c9f2e83d493ff810f17fa5ccd7ed437
+        uses: mikeal/npx@1.0.0
+
+      - run: npm i
+      
+      - name: Execute the tests
+        run: npx -y jest
