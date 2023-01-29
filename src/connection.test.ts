@@ -10,8 +10,8 @@ describe('testConnection', () => {
         });
         const config: Config = { host: 'localhost', port: 3031 };
         const response = await testConnection(config);
-        expect(response).toEqual({ version: 'TEST' });
         server.close();
+        expect(response).toEqual({ version: 'TEST' });
     });
 
     it('returns false if the connection is unsuccessful', async () => {

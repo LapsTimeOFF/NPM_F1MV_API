@@ -17,7 +17,7 @@ describe('LiveTimingAPIV1', () => {
     });
 
     afterEach(() => {
-        server?.close();
+        server.close();
     });
 
     it('returns the data if the topic is valid', async () => {
