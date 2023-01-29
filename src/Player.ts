@@ -1,4 +1,5 @@
 import { Bounds, Config } from './Types';
+import fetch from 'node-fetch';
 
 /**
  *

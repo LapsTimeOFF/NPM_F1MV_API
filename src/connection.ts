@@ -1,4 +1,5 @@
 import { Config } from './Types';
+import fetch from 'node-fetch';
 
 export async function testConnection(config: Config) {
     try {

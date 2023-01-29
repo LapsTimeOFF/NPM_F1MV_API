@@ -1,5 +1,6 @@
 import { invalidTopic } from './Errors';
 import { ClockTopic, Config, Topic } from './Types';
+import fetch from 'node-fetch';
 
 /**
  * Call the Live Timing on V1 [DEPRECATED]

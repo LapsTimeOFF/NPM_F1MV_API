@@ -1,4 +1,5 @@
 import { Config } from './Types';
+import fetch from 'node-fetch';
 
 export async function getF1MVVersion(config: Config) {
     const URL = `http://${config.host}:${config.port}/api/v1/app/version`;

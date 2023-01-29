@@ -1,4 +1,5 @@
 import { Year } from './Types';
+import fetch from 'node-fetch';
 
 export const baseURL = 'https://api.multiviewer.app/api/v1';
 
