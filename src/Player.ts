@@ -151,9 +151,10 @@ export async function setSpeedometerVisibility(
  */
 export async function createPlayer(
     config: Config,
-    numberDriver: number | string,
+    numberDriver: string | number,
     contentId: number | string,
-    bounds: Bounds
+    bounds: Bounds,
+    maintainAspectRatio?: boolean
 ): Promise<object> {
     const response = await fetch(
         `http://${config.host}:${config.port}/api/graphql`,
@@ -167,7 +168,8 @@ export async function createPlayer(
                     input: {
                         bounds: bounds,
                         contentId: contentId,
-                        driverNumber: numberDriver,
+                        driverNumber: typeof numberDriver === 'string' ? parseInt(numberDriver) : numberDriver,
+                        maintainAspectRatio: maintainAspectRatio ? maintainAspectRatio : true
                     },
                 },
                 operationName: 'PlayerCreate',
