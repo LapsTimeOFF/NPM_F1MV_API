@@ -34,8 +34,8 @@ type ClockTopic = 'paused' | 'systemTime' | 'trackTime' | 'liveTimingStartTime';
 type Year = '2019' | '2020' | '2021' | '2022' | 2019 | 2020 | 2021 | 2022;
 
 type Bounds = {
-    height: number;
-    width: number;
+    height?: number;
+    width?: number;
     x: number;
     y: number;
 }

@@ -37,6 +37,44 @@ export async function getPlayerBounds(
 }
 
 /**
+ *
+ * @param config - the config object
+ * @param id - id of the player
+ * @param bounds - bounds of the player
+ */
+export async function setPlayerBounds(
+    config: Config,
+    id: number,
+    bounds: Bounds
+): Promise<object> {
+    const response = await fetch(
+        `http://${config.host}:${config.port}/api/graphql`,
+        {
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+                query: `mutation PlayerSetBounds($playerSetBoundsId: ID!, $bounds: RectangleInput!) {
+                playerSetBounds(id: $playerSetBoundsId, bounds: $bounds) {
+                  x
+                  y
+                }
+              }`,
+                variables: {
+                    playerSetBoundsId: id,
+                    bounds: {
+                        x: bounds.x,
+                        y: bounds.y,
+                    },
+                },
+                operationName: 'PlayerSetBounds',
+            }),
+            method: 'POST',
+        }
+    );
+
+    return await response.json();
+}
+
+/**
  * Get all the players
  * @param config - the config object
  * @returns data.players
@@ -104,14 +142,14 @@ export async function setSpeedometerVisibility(
 }
 
 /**
- * 
+ *
  * @param config - the config object
  * @param numberDriver - the driver number
  * @param contentId - the contentOd
  * @param bounds - the bounds
  * @returns - Promise<object>
  */
-export async function createWindow(
+export async function createPlayer(
     config: Config,
     numberDriver: number | string,
     contentId: number | string,
@@ -133,6 +171,56 @@ export async function createWindow(
                     },
                 },
                 operationName: 'PlayerCreate',
+            }),
+            method: 'POST',
+        }
+    );
+
+    return await response.json();
+}
+
+/**
+ * Sync all the players from 1 player
+ * @param config - The config object
+ * @param playerId - The main player
+ */
+export async function syncPlayers(
+    config: Config,
+    playerId: number | string
+): Promise<object> {
+    const response = await fetch(
+        `http://${config.host}:${config.port}/api/graphql`,
+        {
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+                query: `mutation PlayerSync($playerSyncId: ID!) {
+                playerSync(id: $playerSyncId)
+              }`,
+                variables: {
+                    playerSyncId: playerId,
+                },
+                operationName: 'PlayerSync',
+            }),
+            method: 'POST',
+        }
+    );
+
+    return await response.json();
+}
+
+export async function removePlayer(config: Config, id: number | string) {
+    const response = await fetch(
+        `http://${config.host}:${config.port}/api/graphql`,
+        {
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+                query: `mutation PlayerDelete($playerDeleteId: ID!) {
+                playerDelete(id: $playerDeleteId)
+              }`,
+                variables: {
+                    playerDeleteId: id,
+                },
+                operationName: 'PlayerDelete',
             }),
             method: 'POST',
         }

@@ -6,7 +6,10 @@ describe('index', () => {
         expect(functions.getFIA_Documents).toBeDefined();
         expect(functions.getCircuitInfo).toBeDefined();
         expect(functions.getPlayerBounds).toBeDefined();
-        expect(functions.createWindow).toBeDefined();
+        expect(functions.removePlayer).toBeDefined();
+        expect(functions.syncPlayers).toBeDefined();
+        expect(functions.setPlayerBounds).toBeDefined();
+        expect(functions.createPlayer).toBeDefined();
         expect(functions.setSpeedometerVisibility).toBeDefined();
         expect(functions.getAllPlayers).toBeDefined();
         expect(functions.customGraphQL).toBeDefined();

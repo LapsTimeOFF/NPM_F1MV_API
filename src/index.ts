@@ -11,10 +11,13 @@ import { testConnection } from './connection';
 import { noInstanceFounded, invalidTopic } from './Errors';
 import { getFIA_Documents, getCircuitInfo } from './publicAPI';
 import {
-    createWindow,
+    createPlayer,
     getAllPlayers,
     getPlayerBounds,
+    removePlayer,
+    setPlayerBounds,
     setSpeedometerVisibility,
+    syncPlayers,
 } from './Player';
 import { customGraphQL } from './GraphQL';
 
@@ -29,7 +32,11 @@ export {
     getFIA_Documents,
     getCircuitInfo,
     getPlayerBounds,
-    createWindow,
+    createPlayer,
+    createPlayer as createWindow,
+    removePlayer,
+    syncPlayers,
+    setPlayerBounds,
     setSpeedometerVisibility,
     getAllPlayers,
     customGraphQL,
