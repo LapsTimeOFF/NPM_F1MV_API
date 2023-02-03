@@ -1,7 +1,13 @@
 import fetch from 'node-fetch';
-import { ConnectionDetails } from 'src/Types/Types';
+import { ConnectionDetails } from '../Types/Types';
 
-export async function testConnection(config: ConnectionDetails) {
+/**
+ * [API ONLY] Check if a given config is refering to a valid MUVI instance.
+ * @param config - The config object
+ * @param booleanReturn - Should it return a boolean or the version data ?
+ * @returns Promise<object | boolean>
+ */
+export async function testConnection(config: ConnectionDetails, booleanReturn?: boolean): Promise<object | boolean> {
     try {
         const res = await (
             await fetch(
@@ -9,7 +15,7 @@ export async function testConnection(config: ConnectionDetails) {
             )
         ).json();
         if (res.version !== undefined) {
-            return res;
+            return booleanReturn ? true : res;
         }
         return false;
     } catch (error) {

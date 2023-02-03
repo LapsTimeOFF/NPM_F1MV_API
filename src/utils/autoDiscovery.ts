@@ -19,10 +19,12 @@ export async function discoverF1MVInstances(host: string, debug?: boolean) {
         let newConfig: ConnectionDetails = { host: host, port: _i };
         if(debug) console.log(debugFileHeader, newConfig);
         if ((await testConnection(newConfig)) !== false) {
+            if(debug) console.log(debugFileHeader, `Instance found on port ${newConfig.port}`);
             basePort = _i;
             instanceFounded = true;
             break;
         }
+        if(debug) console.log(debugFileHeader, `No instance found on port ${newConfig.port}`);
     }
 
     if (!instanceFounded) {

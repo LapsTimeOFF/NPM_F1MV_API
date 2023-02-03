@@ -5,8 +5,12 @@ import {
 (async () => {
     const config: ConnectionDetails = {
         host: 'localhost',
-        autodiscovery: true,
+        port: 10101,
     };
 
-    const LiveTiming = new LiveTimingAPI({config, debug: true})
+    const LiveTiming = new LiveTimingAPI({config, debug: true, apiVersion: 'graphql'});
+
+    setTimeout(() => {
+        console.log(LiveTiming.config?.port)
+    }, 1000)
 })();
