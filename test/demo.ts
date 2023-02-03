@@ -1,5 +1,5 @@
 import {
-    ConnectionDetails,
+    ConnectionDetails, LiveTimingAPI,
 } from '../src';
 
 (async () => {
@@ -8,5 +8,5 @@ import {
         autodiscovery: true,
     };
 
-    
+    const LiveTiming = new LiveTimingAPI({config, debug: true})
 })();

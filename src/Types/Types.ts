@@ -1,10 +1,10 @@
 /**
- * This is the ConnectionDetails object type,
+ * This is the `ConnectionDetails` object type,
  * this type is the way to define correctly the host/port of MultiViewer.
  *
  * ! You can't have `port` and `autodiscovery` defined at the same time, it will throw an error. !
  *
- * **Example:**
+ * * **Example:**
  *
  * Valid config with defined port:
  * ```ts
@@ -20,7 +20,7 @@
  *      autodiscovery: true,
  * }
  * ```
- * **Invalid config:**
+ * * **Invalid config:**
  * ```ts
  * const config: ConnectionDetails = {
  *      host: 'localhost',

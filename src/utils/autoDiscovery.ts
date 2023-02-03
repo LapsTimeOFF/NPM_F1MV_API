@@ -1,13 +1,23 @@
-import { noInstanceFounded } from "src/Errors/Errors";
+import { noInstanceFounded } from "../Errors/Errors";
 import { ConnectionDetails } from "src/Types/Types";
 import { testConnection } from "./testConnection";
 
-export async function discoverF1MVInstances(host: string) {
+const debugFileHeader = `[${
+    __filename.split('/')[__filename.split('/').length - 1]
+}]`;
+
+/**
+ * [API ONLY] Detect a F1MV instance on a computer.
+ * @param host - String, define the host to discover the F1MV instance
+ * @returns data about a found instance or an error.
+ */
+export async function discoverF1MVInstances(host: string, debug?: boolean) {
     let basePort = 10101;
     let instanceFounded = false;
 
     for (let _i = basePort; _i < 10111; _i++) {
         let newConfig: ConnectionDetails = { host: host, port: _i };
+        if(debug) console.log(debugFileHeader, newConfig);
         if ((await testConnection(newConfig)) !== false) {
             basePort = _i;
             instanceFounded = true;
