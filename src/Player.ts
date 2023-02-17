@@ -156,7 +156,7 @@ export async function createPlayer(
     contentId: number | string,
     bounds: Bounds,
     maintainAspectRatio?: boolean,
-    streamTitle: string,
+    streamTitle?: string,
 ): Promise<object> {
     const response = await fetch(
         `http://${config.host}:${config.port}/api/graphql`,
