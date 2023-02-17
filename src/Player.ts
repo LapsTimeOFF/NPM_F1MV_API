@@ -171,7 +171,7 @@ export async function createPlayer(
                         bounds: bounds,
                         contentId: contentId,
                         driverNumber: typeof numberDriver === 'string' ? parseInt(numberDriver) : numberDriver,
-                        maintainAspectRatio: maintainAspectRatio ? maintainAspectRatio : true,
+                        maintainAspectRatio: maintainAspectRatio ?? true,
                         streamTitle: streamTitle
                     },
                 },
