@@ -157,6 +157,7 @@ export async function createPlayer(
     bounds: Bounds,
     maintainAspectRatio?: boolean,
     streamTitle?: string,
+    alwaysOnTop?: boolean,
 ): Promise<object> {
     const response = await fetch(
         `http://${config.host}:${config.port}/api/graphql`,
@@ -172,7 +173,8 @@ export async function createPlayer(
                         contentId: contentId,
                         driverNumber: typeof numberDriver === 'string' ? parseInt(numberDriver) : numberDriver,
                         maintainAspectRatio: maintainAspectRatio ?? true,
-                        streamTitle: streamTitle
+                        streamTitle: streamTitle,
+                        alwaysOnTop: alwaysOnTop ?? false
                     },
                 },
                 operationName: 'PlayerCreate',
