@@ -1,8 +1,18 @@
 import { Bounds, Config } from './Types';
 import fetch from 'node-fetch';
 
+type AlwaysOnTopLevel =
+    | 'NORMAL'
+    | 'FLOATING'
+    | 'TORN_OFF_MENU'
+    | 'MODAL_PANEL'
+    | 'MAIN_MENU'
+    | 'STATUS'
+    | 'POP_UP_MENU'
+    | 'SCREEN_SAVER';
+
 /**
- *
+ * Get the bounds of the player
  * @param config - the config object
  * @param id - id of the player
  * @returns data.players.bounds
@@ -37,7 +47,7 @@ export async function getPlayerBounds(
 }
 
 /**
- *
+ * Set the bounds of the player
  * @param config - the config object
  * @param id - id of the player
  * @param bounds - bounds of the player
@@ -108,9 +118,10 @@ export async function getAllPlayers(config: Config): Promise<object> {
 }
 
 /**
- *
+ * Set if the speedometer is visible or not
  * @param config - the config object
  * @param id - the player id
+ * @param visible - if it's visible or not
  * @returns - Promise<boolean>
  */
 export async function setSpeedometerVisibility(
@@ -142,7 +153,45 @@ export async function setSpeedometerVisibility(
 }
 
 /**
- *
+ * Set the player to always on top and edit the level
+ * @param config - the config object
+ * @param id - the player id
+ * @param alwaysOnTop - if the player should be always on top
+ * @param level - {AlwaysOnTopLevel} the level of the always on top RECOMMENDED: 'FLOATING'
+ * @returns - Promise<boolean>
+ */
+export async function setAlwaysOnTop(
+    config: Config,
+    id: number,
+    alwaysOnTop: boolean,
+    level: AlwaysOnTopLevel
+): Promise<boolean> {
+    const response = await fetch(
+        `http://${config.host}:${config.port}/api/graphql`,
+        {
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+                query: `mutation PlayerSetAlwaysOnTop($playerSetAlwaysOnTopId: ID!, $alwaysOnTop: Boolean, $level: AlwaysOnTopLevel) {
+                    playerSetAlwaysOnTop(id: $playerSetAlwaysOnTopId, alwaysOnTop: $alwaysOnTop, level: $level)
+                  }`,
+                variables: {
+                    playerSetAlwaysOnTopId: id,
+                    alwaysOnTop,
+                    level,
+                },
+                operationName: 'PlayerSetAlwaysOnTop',
+            }),
+            method: 'POST',
+        }
+    );
+
+    const data = (await response.json()).data.playerSetAlwaysOnTop;
+
+    return data;
+}
+
+/**
+ * Create a player
  * @param config - the config object
  * @param numberDriver - the driver number
  * @param contentId - the contentOd
@@ -157,7 +206,7 @@ export async function createPlayer(
     bounds: Bounds,
     maintainAspectRatio?: boolean,
     streamTitle?: string,
-    alwaysOnTop?: boolean,
+    alwaysOnTop?: boolean
 ): Promise<object> {
     const response = await fetch(
         `http://${config.host}:${config.port}/api/graphql`,
@@ -171,10 +220,13 @@ export async function createPlayer(
                     input: {
                         bounds: bounds,
                         contentId: contentId,
-                        driverNumber: typeof numberDriver === 'string' ? parseInt(numberDriver) : numberDriver,
+                        driverNumber:
+                            typeof numberDriver === 'string'
+                                ? parseInt(numberDriver)
+                                : numberDriver,
                         maintainAspectRatio: maintainAspectRatio ?? true,
                         streamTitle: streamTitle,
-                        alwaysOnTop: alwaysOnTop ?? false
+                        alwaysOnTop: alwaysOnTop ?? false,
                     },
                 },
                 operationName: 'PlayerCreate',
