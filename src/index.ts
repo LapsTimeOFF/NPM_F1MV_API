@@ -1,4 +1,4 @@
-import { Bounds, ClockTopic, Config, Topic, Year } from './Types';
+import { AlwaysOnTopLevel, Bounds, ClockTopic, Config, Topic, Year } from './Types';
 import { getF1MVVersion, getAPIVersion } from './getVersion';
 import { discoverF1MVInstances } from './discoverF1MVInstances';
 import {
@@ -15,6 +15,7 @@ import {
     getAllPlayers,
     getPlayerBounds,
     removePlayer,
+    setAlwaysOnTop,
     setPlayerBounds,
     setSpeedometerVisibility,
     syncPlayers,
@@ -27,6 +28,7 @@ export {
     ClockTopic,
     Year,
     Bounds,
+    AlwaysOnTopLevel,
     getAPIVersion,
     getF1MVVersion,
     getFIA_Documents,
@@ -38,6 +40,7 @@ export {
     syncPlayers,
     setPlayerBounds,
     setSpeedometerVisibility,
+    setAlwaysOnTop,
     getAllPlayers,
     customGraphQL,
     discoverF1MVInstances,

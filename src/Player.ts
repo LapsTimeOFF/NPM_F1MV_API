@@ -1,15 +1,5 @@
-import { Bounds, Config } from './Types';
+import { Bounds, Config, AlwaysOnTopLevel } from './Types';
 import fetch from 'node-fetch';
-
-type AlwaysOnTopLevel =
-    | 'NORMAL'
-    | 'FLOATING'
-    | 'TORN_OFF_MENU'
-    | 'MODAL_PANEL'
-    | 'MAIN_MENU'
-    | 'STATUS'
-    | 'POP_UP_MENU'
-    | 'SCREEN_SAVER';
 
 /**
  * Get the bounds of the player
