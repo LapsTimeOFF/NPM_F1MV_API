@@ -3,9 +3,8 @@ import { ClockTopic, Config, Topic } from './Types';
 import fetch from 'node-fetch';
 
 /**
- * Call the Live Timing on V1 [DEPRECATED]
- *
- * @deprecated
+ * Call the Live Timing on V1
+ * @deprecated This function is deprecated and will be removed in the next minor version due to the removal of the REST API of F1MV.
  * @param config - the config object
  * @param topic - a Topic
  * @returns an object
@@ -25,8 +24,8 @@ export async function LiveTimingAPIV1(config: Config, topic: Topic) {
 }
 
 /**
- * Call the Live Timing on V2 [NOT RECOMANDED USE GRAPHQL INSTEAD]
- *
+ * Call the Live Timing on V2
+ * @deprecated This function is deprecated and will be removed in the next minor version due to the removal of the REST API of F1MV.
  * @param config - the config object
  * @param topic - a Topic or an Array<Topic>
  * @returns an object

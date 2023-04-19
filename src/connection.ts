@@ -3,11 +3,23 @@ import fetch from 'node-fetch';
 
 export async function testConnection(config: Config) {
   try {
-    const res = await (
-      await fetch(`http://${config.host}:${config.port}/api/v1/app/version`)
+    const data = await (
+      await fetch(
+        `http://${config.host}:${config.port}/api/graphql`,
+        {
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            query: `query GetVersion {
+              version
+            }`,
+            operationName: 'GetVersion',
+          }),
+          method: 'POST',
+        }
+      )
     ).json();
-    if (res.version !== undefined) {
-      return res;
+    if (data.version !== undefined) {
+      return data;
     }
     return false;
   } catch (error) {

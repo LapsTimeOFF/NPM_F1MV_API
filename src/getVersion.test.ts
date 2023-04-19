@@ -5,13 +5,17 @@ const app = require('express')();
 describe('getF1MVVersion', () => {
   it('returns the version as an integer', async () => {
     let server = await app.listen(8081);
-    await app.get('/api/v1/app/version', (_, res) => {
-      res.send({ version: '1.10.0' });
+    await app.post('/api/graphql', (_, res) => {
+      res.send({
+        data: {
+          version: '1.14.2',
+        },
+      });
     });
     const config = { host: 'localhost', port: 8081 };
     const response = await getF1MVVersion(config);
     server.close();
-    expect(response).toBe(1100);
+    expect(response).toBe(1142);
   });
 });
 

@@ -1,7 +1,7 @@
 {
     "name": "npm_f1mv_api",
-    "version": "1.4.5",
-    "description": "Talk with the MulitiViewer API easily",
+    "version": "1.4.6",
+    "description": "Talk with the MultiViewer API easily",
     "main": "dist/index.js",
     "module": "dist/index.d.ts",
     "scripts": {
