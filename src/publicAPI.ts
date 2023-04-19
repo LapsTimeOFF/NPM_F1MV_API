@@ -8,10 +8,10 @@ export const baseURL = 'https://api.multiviewer.app/api/v1';
  * @param year - Year of the wanted documents
  */
 export async function getFIA_Documents(year: Year): Promise<object> {
-    const req = await fetch(`${baseURL}/fia-documents/${year}`);
-    const data = await req.json();
+  const req = await fetch(`${baseURL}/fia-documents/${year}`);
+  const data = await req.json();
 
-    return data;
+  return data;
 }
 
 /**
@@ -20,11 +20,11 @@ export async function getFIA_Documents(year: Year): Promise<object> {
  * @param year - For a specific year
  */
 export async function getCircuitInfo(
-    cicuitId: number,
-    year: Year
+  cicuitId: number,
+  year: Year
 ): Promise<object> {
-    const req = await fetch(`${baseURL}/circuits/${cicuitId}/${year}`);
-    const data = await req.json();
+  const req = await fetch(`${baseURL}/circuits/${cicuitId}/${year}`);
+  const data = await req.json();
 
-    return data;
+  return data;
 }

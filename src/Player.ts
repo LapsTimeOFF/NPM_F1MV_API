@@ -8,15 +8,15 @@ import fetch from 'node-fetch';
  * @returns data.players.bounds
  */
 export async function getPlayerBounds(
-    config: Config,
-    id: number
+  config: Config,
+  id: number
 ): Promise<Bounds> {
-    const response = await fetch(
-        `http://${config.host}:${config.port}/api/graphql`,
-        {
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-                query: `query Player($playerId: ID!) {
+  const response = await fetch(
+    `http://${config.host}:${config.port}/api/graphql`,
+    {
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: `query Player($playerId: ID!) {
                 player(id: $playerId) {
                   bounds {
                     height
@@ -26,14 +26,14 @@ export async function getPlayerBounds(
                   }
                 }
               }`,
-                variables: { playerId: id },
-                operationName: 'Player',
-            }),
-            method: 'POST',
-        }
-    );
-    const data = (await response.json()).data.player.bounds;
-    return data;
+        variables: { playerId: id },
+        operationName: 'Player',
+      }),
+      method: 'POST',
+    }
+  );
+  const data = (await response.json()).data.player.bounds;
+  return data;
 }
 
 /**
@@ -43,35 +43,35 @@ export async function getPlayerBounds(
  * @param bounds - bounds of the player
  */
 export async function setPlayerBounds(
-    config: Config,
-    id: number,
-    bounds: Bounds
+  config: Config,
+  id: number,
+  bounds: Bounds
 ): Promise<object> {
-    const response = await fetch(
-        `http://${config.host}:${config.port}/api/graphql`,
-        {
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-                query: `mutation PlayerSetBounds($playerSetBoundsId: ID!, $bounds: RectangleInput!) {
+  const response = await fetch(
+    `http://${config.host}:${config.port}/api/graphql`,
+    {
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: `mutation PlayerSetBounds($playerSetBoundsId: ID!, $bounds: RectangleInput!) {
                 playerSetBounds(id: $playerSetBoundsId, bounds: $bounds) {
                   x
                   y
                 }
               }`,
-                variables: {
-                    playerSetBoundsId: id,
-                    bounds: {
-                        x: bounds.x,
-                        y: bounds.y,
-                    },
-                },
-                operationName: 'PlayerSetBounds',
-            }),
-            method: 'POST',
-        }
-    );
+        variables: {
+          playerSetBoundsId: id,
+          bounds: {
+            x: bounds.x,
+            y: bounds.y,
+          },
+        },
+        operationName: 'PlayerSetBounds',
+      }),
+      method: 'POST',
+    }
+  );
 
-    return await response.json();
+  return await response.json();
 }
 
 /**
@@ -80,12 +80,12 @@ export async function setPlayerBounds(
  * @returns data.players
  */
 export async function getAllPlayers(config: Config): Promise<object> {
-    const result = await fetch(
-        `http://${config.host}:${config.port}/api/graphql`,
-        {
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-                query: `query DriverData {
+  const result = await fetch(
+    `http://${config.host}:${config.port}/api/graphql`,
+    {
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: `query DriverData {
                     players {
                       driverData {
                         driverNumber
@@ -97,14 +97,14 @@ export async function getAllPlayers(config: Config): Promise<object> {
                       }
                     }
                   }`,
-                variables: {},
-                operationName: 'DriverData',
-            }),
-            method: 'POST',
-        }
-    );
-    const data = (await result.json()).data.players;
-    return data;
+        variables: {},
+        operationName: 'DriverData',
+      }),
+      method: 'POST',
+    }
+  );
+  const data = (await result.json()).data.players;
+  return data;
 }
 
 /**
@@ -115,31 +115,31 @@ export async function getAllPlayers(config: Config): Promise<object> {
  * @returns - Promise<boolean>
  */
 export async function setSpeedometerVisibility(
-    config: Config,
-    id: number,
-    visible: boolean
+  config: Config,
+  id: number,
+  visible: boolean
 ): Promise<boolean> {
-    const response = await fetch(
-        `http://${config.host}:${config.port}/api/graphql`,
-        {
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-                query: `mutation PlayerSetSpeedometerVisibility($playerSetSpeedometerVisibilityId: ID!, $visible: Boolean) {
+  const response = await fetch(
+    `http://${config.host}:${config.port}/api/graphql`,
+    {
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: `mutation PlayerSetSpeedometerVisibility($playerSetSpeedometerVisibilityId: ID!, $visible: Boolean) {
                 playerSetSpeedometerVisibility(id: $playerSetSpeedometerVisibilityId, visible: $visible)
               }`,
-                variables: {
-                    playerSetSpeedometerVisibilityId: id,
-                    visible,
-                },
-                operationName: 'PlayerSetSpeedometerVisibility',
-            }),
-            method: 'POST',
-        }
-    );
+        variables: {
+          playerSetSpeedometerVisibilityId: id,
+          visible,
+        },
+        operationName: 'PlayerSetSpeedometerVisibility',
+      }),
+      method: 'POST',
+    }
+  );
 
-    const data = (await response.json()).data.playerSetSpeedometerVisibility;
+  const data = (await response.json()).data.playerSetSpeedometerVisibility;
 
-    return data;
+  return data;
 }
 
 /**
@@ -151,33 +151,33 @@ export async function setSpeedometerVisibility(
  * @returns - Promise<boolean>
  */
 export async function setAlwaysOnTop(
-    config: Config,
-    id: number,
-    alwaysOnTop: boolean,
-    level: AlwaysOnTopLevel
+  config: Config,
+  id: number,
+  alwaysOnTop: boolean,
+  level: AlwaysOnTopLevel
 ): Promise<boolean> {
-    const response = await fetch(
-        `http://${config.host}:${config.port}/api/graphql`,
-        {
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-                query: `mutation PlayerSetAlwaysOnTop($playerSetAlwaysOnTopId: ID!, $alwaysOnTop: Boolean, $level: AlwaysOnTopLevel) {
+  const response = await fetch(
+    `http://${config.host}:${config.port}/api/graphql`,
+    {
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: `mutation PlayerSetAlwaysOnTop($playerSetAlwaysOnTopId: ID!, $alwaysOnTop: Boolean, $level: AlwaysOnTopLevel) {
                     playerSetAlwaysOnTop(id: $playerSetAlwaysOnTopId, alwaysOnTop: $alwaysOnTop, level: $level)
                   }`,
-                variables: {
-                    playerSetAlwaysOnTopId: id,
-                    alwaysOnTop,
-                    level,
-                },
-                operationName: 'PlayerSetAlwaysOnTop',
-            }),
-            method: 'POST',
-        }
-    );
+        variables: {
+          playerSetAlwaysOnTopId: id,
+          alwaysOnTop,
+          level,
+        },
+        operationName: 'PlayerSetAlwaysOnTop',
+      }),
+      method: 'POST',
+    }
+  );
 
-    const data = (await response.json()).data.playerSetAlwaysOnTop;
+  const data = (await response.json()).data.playerSetAlwaysOnTop;
 
-    return data;
+  return data;
 }
 
 /**
@@ -190,42 +190,42 @@ export async function setAlwaysOnTop(
  * @returns - Promise<object>
  */
 export async function createPlayer(
-    config: Config,
-    numberDriver: string | number,
-    contentId: number | string,
-    bounds: Bounds,
-    maintainAspectRatio?: boolean,
-    streamTitle?: string,
-    alwaysOnTop?: boolean
+  config: Config,
+  numberDriver: string | number,
+  contentId: number | string,
+  bounds: Bounds,
+  maintainAspectRatio?: boolean,
+  streamTitle?: string,
+  alwaysOnTop?: boolean
 ): Promise<object> {
-    const response = await fetch(
-        `http://${config.host}:${config.port}/api/graphql`,
-        {
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-                query: `mutation PlayerCreate($input: PlayerCreateInput!) {
+  const response = await fetch(
+    `http://${config.host}:${config.port}/api/graphql`,
+    {
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: `mutation PlayerCreate($input: PlayerCreateInput!) {
                 playerCreate(input: $input)
               }`,
-                variables: {
-                    input: {
-                        bounds: bounds,
-                        contentId: contentId,
-                        driverNumber:
-                            typeof numberDriver === 'string'
-                                ? parseInt(numberDriver)
-                                : numberDriver,
-                        maintainAspectRatio: maintainAspectRatio ?? true,
-                        streamTitle: streamTitle,
-                        alwaysOnTop: alwaysOnTop ?? false,
-                    },
-                },
-                operationName: 'PlayerCreate',
-            }),
-            method: 'POST',
-        }
-    );
+        variables: {
+          input: {
+            bounds: bounds,
+            contentId: contentId,
+            driverNumber:
+              typeof numberDriver === 'string'
+                ? parseInt(numberDriver)
+                : numberDriver,
+            maintainAspectRatio: maintainAspectRatio ?? true,
+            streamTitle: streamTitle,
+            alwaysOnTop: alwaysOnTop ?? false,
+          },
+        },
+        operationName: 'PlayerCreate',
+      }),
+      method: 'POST',
+    }
+  );
 
-    return await response.json();
+  return await response.json();
 }
 
 /**
@@ -234,46 +234,46 @@ export async function createPlayer(
  * @param playerId - The main player
  */
 export async function syncPlayers(
-    config: Config,
-    playerId: number | string
+  config: Config,
+  playerId: number | string
 ): Promise<object> {
-    const response = await fetch(
-        `http://${config.host}:${config.port}/api/graphql`,
-        {
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-                query: `mutation PlayerSync($playerSyncId: ID!) {
+  const response = await fetch(
+    `http://${config.host}:${config.port}/api/graphql`,
+    {
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: `mutation PlayerSync($playerSyncId: ID!) {
                 playerSync(id: $playerSyncId)
               }`,
-                variables: {
-                    playerSyncId: playerId,
-                },
-                operationName: 'PlayerSync',
-            }),
-            method: 'POST',
-        }
-    );
+        variables: {
+          playerSyncId: playerId,
+        },
+        operationName: 'PlayerSync',
+      }),
+      method: 'POST',
+    }
+  );
 
-    return await response.json();
+  return await response.json();
 }
 
 export async function removePlayer(config: Config, id: number | string) {
-    const response = await fetch(
-        `http://${config.host}:${config.port}/api/graphql`,
-        {
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-                query: `mutation PlayerDelete($playerDeleteId: ID!) {
+  const response = await fetch(
+    `http://${config.host}:${config.port}/api/graphql`,
+    {
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: `mutation PlayerDelete($playerDeleteId: ID!) {
                 playerDelete(id: $playerDeleteId)
               }`,
-                variables: {
-                    playerDeleteId: id,
-                },
-                operationName: 'PlayerDelete',
-            }),
-            method: 'POST',
-        }
-    );
+        variables: {
+          playerDeleteId: id,
+        },
+        operationName: 'PlayerDelete',
+      }),
+      method: 'POST',
+    }
+  );
 
-    return await response.json();
+  return await response.json();
 }

@@ -11,17 +11,17 @@ import fetch from 'node-fetch';
  * @returns an object
  */
 export async function LiveTimingAPIV1(config: Config, topic: Topic) {
-    const data = await (
-        await fetch(
-            `http://${config.host}:${config.port}/api/v1/live-timing/${topic}`
-        )
-    ).json();
+  const data = await (
+    await fetch(
+      `http://${config.host}:${config.port}/api/v1/live-timing/${topic}`
+    )
+  ).json();
 
-    if (data.success === false) {
-        return invalidTopic;
-    } else {
-        return data;
-    }
+  if (data.success === false) {
+    return invalidTopic;
+  } else {
+    return data;
+  }
 }
 
 /**
@@ -32,22 +32,22 @@ export async function LiveTimingAPIV1(config: Config, topic: Topic) {
  * @returns an object
  */
 export async function LiveTimingAPIV2(
-    config: Config,
-    topic: Topic | Array<Topic>
+  config: Config,
+  topic: Topic | Array<Topic>
 ) {
-    const data = await (
-        await fetch(
-            `http://${config.host}:${config.port}/api/v2/live-timing/state/${
-                typeof topic === 'object' ? topic.join(',') : topic
-            }`
-        )
-    ).json();
+  const data = await (
+    await fetch(
+      `http://${config.host}:${config.port}/api/v2/live-timing/state/${
+        typeof topic === 'object' ? topic.join(',') : topic
+      }`
+    )
+  ).json();
 
-    if (data.success === false) {
-        return invalidTopic;
-    } else {
-        return data;
-    }
+  if (data.success === false) {
+    return invalidTopic;
+  } else {
+    return data;
+  }
 }
 
 /**
@@ -58,33 +58,33 @@ export async function LiveTimingAPIV2(
  * @returns an object
  */
 export async function LiveTimingAPIGraphQL(
-    config: Config,
-    topic: Topic | Array<Topic>
+  config: Config,
+  topic: Topic | Array<Topic>
 ) {
-    const { data } = await (
-        await fetch(`http://${config.host}:${config.port}/api/graphql`, {
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-                query: `query LiveTimingState {
+  const { data } = await (
+    await fetch(`http://${config.host}:${config.port}/api/graphql`, {
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: `query LiveTimingState {
                             liveTimingState {
                                 ${
-                                    typeof topic === 'object'
-                                        ? topic.join('\n')
-                                        : topic
+                                  typeof topic === 'object'
+                                    ? topic.join('\n')
+                                    : topic
                                 }
                             }
                         }`,
-                operationName: 'LiveTimingState',
-            }),
-            method: 'POST',
-        })
-    ).json();
+        operationName: 'LiveTimingState',
+      }),
+      method: 'POST',
+    })
+  ).json();
 
-    if (data.success === false) {
-        return invalidTopic;
-    } else {
-        return data.liveTimingState;
-    }
+  if (data.success === false) {
+    return invalidTopic;
+  } else {
+    return data.liveTimingState;
+  }
 }
 
 /**
@@ -95,33 +95,33 @@ export async function LiveTimingAPIGraphQL(
  * @returns an object
  */
 export async function LiveTimingClockAPIGraphQL(
-    config: Config,
-    topic: ClockTopic | Array<ClockTopic>
+  config: Config,
+  topic: ClockTopic | Array<ClockTopic>
 ) {
-    const { data } = await (
-        await fetch(`http://${config.host}:${config.port}/api/graphql`, {
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-                query: `query LiveTimingClock {
+  const { data } = await (
+    await fetch(`http://${config.host}:${config.port}/api/graphql`, {
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: `query LiveTimingClock {
                             liveTimingClock {
                                 ${
-                                    typeof topic === 'object'
-                                        ? topic.join('\n')
-                                        : topic
+                                  typeof topic === 'object'
+                                    ? topic.join('\n')
+                                    : topic
                                 }
                             }
                         }`,
-                operationName: 'LiveTimingClock',
-            }),
-            method: 'POST',
-        })
-    ).json();
+        operationName: 'LiveTimingClock',
+      }),
+      method: 'POST',
+    })
+  ).json();
 
-    if (data.success === false) {
-        return invalidTopic;
-    } else {
-        return data.liveTimingClock;
-    }
+  if (data.success === false) {
+    return invalidTopic;
+  } else {
+    return data.liveTimingClock;
+  }
 }
 
 // curl --request POST \
