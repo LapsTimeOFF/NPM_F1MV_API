@@ -1,4 +1,4 @@
-import { getF1MVVersion, getAPIVersion } from '../src/getVersion';
+import { getF1MVVersion, getAPIVersion } from './getVersion';
 import express from 'express';
 const app = require('express')();
 

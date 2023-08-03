@@ -10,6 +10,6 @@
         "baseUrl": "./",
         "incremental": true
     },
-    "include": ["src/**/*", "test/publicAPI.test.ts", "test/LiveTimingAPI.test.ts", "test/index.test.ts", "test/getVersion.test.ts", "test/discoverF1MVInstances.test.ts", "test/connection.test.ts"],
+    "include": ["src/**/*", "src/publicAPI.test.ts", "src/LiveTimingAPI.test.ts", "src/index.test.ts", "src/getVersion.test.ts", "src/discoverF1MVInstances.test.ts", "src/connection.test.ts"],
     "exclude": ["node_modules", "test", "lib", "**/*test.ts"]
 }
