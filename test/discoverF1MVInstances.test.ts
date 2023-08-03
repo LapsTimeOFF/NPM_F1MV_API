@@ -1,6 +1,6 @@
-import { testConnection } from './connection';
-import { discoverF1MVInstances } from './discoverF1MVInstances';
-import { noInstanceFounded } from './Errors';
+import { testConnection } from '../src/connection';
+import { discoverF1MVInstances } from '../src/discoverF1MVInstances';
+import { noInstanceFounded } from '../src/Errors';
 
 jest.mock('./connection', () => ({
   testConnection: jest.fn(),

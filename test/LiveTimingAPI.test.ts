@@ -1,6 +1,6 @@
-import { invalidTopic } from './Errors';
-import { LiveTimingAPIV1, LiveTimingAPIV2 } from './LiveTimingAPI';
-import { Topic } from './Types';
+import { invalidTopic } from '../src/Errors';
+import { LiveTimingAPIV1, LiveTimingAPIV2 } from '../src/LiveTimingAPI';
+import { Topic } from '../src/Types';
 import express from 'express';
 const app = require('express')();
 

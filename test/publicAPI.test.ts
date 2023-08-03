@@ -1,4 +1,4 @@
-import { getFIA_Documents, getCircuitInfo } from './publicAPI';
+import { getFIA_Documents, getCircuitInfo } from '../src/publicAPI';
 
 describe('FIA documents', () => {
   test('getFIA_Documents function should return data for the specified year', async () => {

@@ -1,5 +1,5 @@
-import { testConnection } from './connection';
-import { Config } from './Types';
+import { testConnection } from '../src/connection';
+import { Config } from '../src/Types';
 const app = require('express')();
 
 describe('testConnection', () => {
