@@ -31,12 +31,9 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.2.4
-        with:
-          version: latest
-      - run: pnpm i
-      - run: pnpm build
-      - run: pnpm publish --no-git-checks
+
+      - run: npm i
+      - run: npm run build
+      - run: npm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
