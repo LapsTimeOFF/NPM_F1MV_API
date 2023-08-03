@@ -277,3 +277,47 @@ export async function removePlayer(config: Config, id: number | string) {
 
   return await response.json();
 }
+
+export async function setVolumePlayer(config: Config, id: number | string, volume: number) {
+  const response = await fetch(
+    `http://${config.host}:${config.port}/api/graphql`,
+    {
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: `mutation PlayerSetVolume($playerSetVolumeId: ID!, $volume: Float!) {
+          playerSetVolume(id: $playerSetVolumeId, volume: $volume)
+        }`,
+        variables: {
+          playerSetVolumeId: id,
+          volume,
+        },
+        operationName: 'PlayerSetVolume',
+      }),
+      method: 'POST',
+    }
+  );
+
+  return await response.json();
+}
+
+export async function setMutedPlayer(config: Config, id: number | string, muted: boolean) {
+  const response = await fetch(
+    `http://${config.host}:${config.port}/api/graphql`,
+    {
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: `mutation PlayerSetMuted($playerSetMutedId: ID!, $muted: Boolean) {
+          playerSetMuted(id: $playerSetMutedId, muted: $muted)
+        }`,
+        variables: {
+          playerSetMutedId: id,
+          muted,
+        },
+        operationName: 'PlayerSetMuted',
+      }),
+      method: 'POST',
+    }
+  );
+
+  return await response.json();
+}
