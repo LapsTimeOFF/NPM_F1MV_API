@@ -15,12 +15,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.2.4
-        with:
-          version: latest
-      - run: pnpm i
-      - run: pnpm build
+      - run: yarn i
+      - run: yarn build
 
   publish-npm:
     needs: build
