@@ -30,7 +30,7 @@
  * ```
  */
 export type ConnectionDetails = {
-    host: string;
-    port?: number;
-    autodiscovery?: boolean;
+  host: string;
+  port?: number;
+  autodiscovery?: boolean;
 };
