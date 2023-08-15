@@ -87,15 +87,41 @@ export async function getAllPlayers(config: Config): Promise<object> {
       body: JSON.stringify({
         query: `query DriverData {
                     players {
-                      driverData {
-                        driverNumber
+                        id
+                        type
+                        state {
+                          ts
+                          paused
+                          muted
+                          volume
+                          live
+                          currentTime
+                          interpolatedCurrentTime
+                        }
+                        driverData {
+                          driverNumber
+                          tla
+                          firstName
+                          lastName
+                          teamName
+                        }
+                        streamData {
+                          contentId
+                          meetingKey
+                          sessionKey
+                          channelId
+                          title
+                        }
+                        bounds {
+                          x
+                          y
+                          width
+                          height
+                        }
+                        fullscreen
+                        alwaysOnTop
+                        maintainAspectRatio
                       }
-                      id
-                      streamData {
-                        contentId
-                        title
-                      }
-                    }
                   }`,
         variables: {},
         operationName: 'DriverData',
