@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 
 export async function testConnection(config: Config) {
   try {
-    const data = await (
+    const {data} = await (
       await fetch(
         `http://${config.host}:${config.port}/api/graphql`,
         {
@@ -18,6 +18,7 @@ export async function testConnection(config: Config) {
         }
       )
     ).json();
+
     if (data.version !== undefined) {
       return data;
     }
