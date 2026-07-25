@@ -1,0 +1,702 @@
+type Query {
+    """Get the version of the app"""
+  version: String!
+
+  """Basic system information (platform and CPU architecture)"""
+  systemInfo: SystemInfo!
+
+  """Get all open players"""
+  players: [Player!
+    ]!
+
+  """Get a player by ID"""
+  player(id: ID!): Player!
+
+  """Get the live timing state"""
+  liveTimingState: LiveTimingState @deprecated(reason: "Use the f1LiveTimingState field instead")
+
+  """Get the clock information for the live timing (for session clock etc.)"""
+  liveTimingClock: LiveTimingClock @deprecated(reason: "Use the f1LiveTimingClock field instead")
+
+  """Get the F1 live timing state"""
+  f1LiveTimingState: F1LiveTimingState
+
+  """
+  Get the clock information for the F1 live timing (for session clock etc.)
+  """
+  f1LiveTimingClock: F1LiveTimingClock
+
+  """Get the FIA WEC live timing state"""
+  fiawecLiveTimingState: FIAWECLiveTimingState
+
+  """Active subscriptions for the current user"""
+  activeSubscriptions: [Subscription!
+    ]!
+}
+
+type Mutation {
+    """Get the version of the app"""
+  version: String!
+
+  """
+  Create a new player
+  
+  Returns the ID of the created player
+  """
+  playerCreate(
+    """Input object for this player"""
+    input: PlayerCreateInput!
+  ): ID!
+
+  """Close a player"""
+  playerDelete(
+    """The browserWindowId of the player"""
+    id: ID!
+  ): Boolean!
+
+  """
+  Control the fullscreen state of a player
+  
+  Returns the new fullscreen state
+  """
+  playerSetFullscreen(
+    """The browserWindowId of the player"""
+    id: ID!
+
+    """
+    Whether the player should be fullscreen or not, if not set the
+    player will toggle fullscreen
+    """
+    fullscreen: Boolean
+  ): Boolean!
+
+  """
+  Control the alwaysOnTop state of a player
+  
+  Returns the new alwaysOnTop state
+  """
+  playerSetAlwaysOnTop(
+    """The browserWindowId of the player"""
+    id: ID!
+
+    """
+    Whether the player should be alwaysOnTop or not, if not set the
+    player will toggle alwaysOnTop
+    """
+    alwaysOnTop: Boolean
+
+    """
+    The level of alwaysOnTop, defaults to "floating""""
+    level: AlwaysOnTopLevel
+  ): Boolean!
+
+  """Set the bounds of a player"""
+  playerSetBounds(
+    """The browserWindowId of the player"""
+    id: ID!
+
+    """
+    The new bounds of the player, any values that are not specified will remain unchanged
+    """
+    bounds: RectangleInput!
+  ): Rectangle!
+
+  """Set volume of a player"""
+  playerSetVolume(
+    """The browserWindowId of the player"""
+    id: ID!
+
+    """The volume of the player (0-100)"""
+    volume: Float!
+  ): Float!
+
+  """
+  Play/pause a player
+  
+  Returns the new paused state
+  """
+  playerSetPaused(
+    """The browserWindowId of the player"""
+    id: ID!
+
+    """
+    Whether the player should be paused or not, if not set the
+    player will toggle play/paused state
+    """
+    paused: Boolean
+  ): Boolean!
+
+  """
+  Mute/unmute a player
+  
+  Returns the new muted state
+  """
+  playerSetMuted(
+    """The browserWindowId of the player"""
+    id: ID!
+
+    """
+    Whether the player should be muted or not, if not set the
+    player will toggle muted/unmuted state
+    """
+    muted: Boolean
+  ): Boolean!
+
+  """
+  Seek a player
+  
+  Requires either `absolute` or `relative` to be set
+  
+  > Note: This doesn't work for live players
+  
+  Returns the seeked time
+  """
+  playerSeekTo(
+    """The browserWindowId of the player"""
+    id: ID!
+
+    """The timestamp to seek to"""
+    absolute: Float
+
+    """
+    The relative amount to seek, negative values seek backwards and
+    positive values seek forwards
+    """
+    relative: Float
+  ): Float!
+
+  """
+  Sync other players to a player
+  
+  Returns `true` if the sync was successful
+  """
+  playerSync(
+    """The browserWindowId of the player"""
+    id: ID!
+  ): Boolean!
+
+  """Control the visibility of the driver speedometer"""
+  playerSetSpeedometerVisibility(
+    """The browserWindowId of the player"""
+    id: ID!
+
+    """
+    The visibility of the speedometer, if not set the speedometer will toggle visibility
+    """
+    visible: Boolean
+  ): Boolean!
+
+  """Set the driver header mode for on-board players"""
+  playerSetDriverHeaderMode(
+    """The browserWindowId of the player"""
+    id: ID!
+
+    """The driver header mode"""
+    mode: DriverHeaderMode!
+  ): DriverHeaderMode!
+}
+
+"""Basic system information"""
+type SystemInfo {
+    """The current platform (win32, darwin, linux)"""
+  platform: String!
+
+  """The current CPU architecture (x64, arm64, etc.)"""
+  arch: String!
+}
+
+"""Object with arbitrary, untyped data"""
+scalar JSONObject
+
+"""Integer represented as a base-10 string"""
+scalar BigInt
+
+"""A player object"""
+type Player {
+    """The browserWindowId of the player"""
+  id: ID!
+
+  """The player type"""
+  type: PlayerType!
+
+  """The player state"""
+  state: PlayerState
+
+  """
+  If this is a player of type OBC, this will contain the available driver data
+  """
+  driverData: PlayerDriverData
+
+  """The stream metadata for this player"""
+  streamData: PlayerStreamData
+
+  """The bounds of the player"""
+  bounds: Rectangle!
+
+  """Whether the player is fullscreen or not"""
+  fullscreen: Boolean!
+
+  """Whether the player is always on top or not"""
+  alwaysOnTop: Boolean!
+
+  """Whether the player maintains aspect ratio or not"""
+  maintainAspectRatio: Boolean!
+}
+
+"""The player state"""
+type PlayerState {
+    """The UNIX timestamp when the player state was last updated"""
+  ts: Float!
+
+  """Whether the player is paused or not"""
+  paused: Boolean!
+
+  """Whether the player is muted or not"""
+  muted: Boolean!
+
+  """The player's volume (0-100)"""
+  volume: Float!
+
+  """Whether the player is live or not"""
+  live: Boolean!
+
+  """The current time of the player, at the time it was last updated"""
+  currentTime: Float
+
+  """The interpolated current time of the player"""
+  interpolatedCurrentTime: Float
+}
+
+"""Driver metadata for a player"""
+type PlayerDriverData {
+    """The driver's driver number"""
+  driverNumber: Int!
+
+  """The drivers TLA (Three-Letter-Acronym)"""
+  tla: String!
+
+  """The driver's first name"""
+  firstName: String!
+
+  """The driver's last name"""
+  lastName: String!
+
+  """The constructor's name"""
+  teamName: String!
+}
+
+"""Stream metadata for players"""
+type PlayerStreamData {
+    """The contentId for this stream"""
+  contentId: ID
+
+  """The meeting key for this stream (if part of a meeting)"""
+  meetingKey: String
+
+  """The session key for this stream (if part of a meeting)"""
+  sessionKey: String
+
+  """
+  If part of a content container with multiple additional streams, the ID of the channel
+  """
+  channelId: Int
+
+  """The stream's title"""
+  title: String
+}
+
+"""A rectangle, with dimensions and position"""
+type Rectangle {
+    """The x position of the rectangle"""
+  x: Int!
+
+  """The y position of the rectangle"""
+  y: Int!
+
+  """The width of the rectangle"""
+  width: Int!
+
+  """The height of the rectangle"""
+  height: Int!
+}
+
+"""The player type"""
+enum PlayerType {
+    """
+  Additional stream, such as International, F1 Live, Data channel or Driver tracker
+  """
+  ADDITIONAL
+
+  """On-board camera, for drivers"""
+  OBC
+}
+
+"""
+Level for always on top mode
+
+See https: //developer.apple.com/documentation/appkit/nswindow/level
+"""
+enum AlwaysOnTopLevel {
+  NORMAL
+  FLOATING
+  TORN_OFF_MENU
+  MODAL_PANEL
+  MAIN_MENU
+  STATUS
+  POP_UP_MENU
+  SCREEN_SAVER
+}
+
+"""The driver header mode for on-board players"""
+enum DriverHeaderMode {
+    """Show nothing at all"""
+  NONE
+
+  """Show live timing data for the driver (when live timing is available)"""
+  OBC_LIVE_TIMING
+
+  """Show the driver's headshot and TLA"""
+  DRIVER_HEADER
+}
+
+"""The input for creating a player"""
+input PlayerCreateInput {
+    """The contentId for the player"""
+  contentId: ID!
+
+  """The channelId (if applicable) for this player"""
+  channelId: Int
+
+  """
+  The TLA (Three-Letter-Acronym) for the driver (if applicable) for this player
+  
+  > Note: this can be used instead of channelId
+  """
+  driverTla: String
+
+  """
+  The driver number for the driver (if applicable) for this player
+  
+  > Note: this can be used instead of channelId
+  """
+  driverNumber: Int
+
+  """
+  The title of the stream (if applicable) for this player
+  
+  > Note: this can be used instead of channelId
+  """
+  streamTitle: String
+
+  """The bounds for this window"""
+  bounds: RectangleInput
+
+  """Whether the player should be fullscreen or not"""
+  fullscreen: Boolean
+
+  """Whether the player should be always on top or not"""
+  alwaysOnTop: Boolean
+
+  """Whether the player should maintain aspect ratio or not"""
+  maintainAspectRatio: Boolean
+}
+
+"""A rectangle input, with the dimensions and position"""
+input RectangleInput {
+    """The x position of the rectangle"""
+  x: Int
+
+  """The y position of the rectangle"""
+  y: Int
+
+  """The width of the rectangle"""
+  width: Int
+
+  """The height of the rectangle"""
+  height: Int
+}
+
+"""F1 live timing state"""
+type LiveTimingState {
+    """The status of the live timing archive, used for replay live timing"""
+  ArchiveStatus: JSONObject
+
+  """Available audio commentary streams"""
+  AudioStreams: JSONObject
+
+  """Car telemetry data, speed, throttle, brake, gear, RPM, DRS"""
+  CarData: JSONObject
+
+  """
+  Live championship standings, available for sessions where points are being awarded
+  """
+  ChampionshipPrediction: JSONObject
+
+  """Text-based content streams (via ScribbleLive) and audio commentary"""
+  ContentStreams: JSONObject
+
+  """List of all participating drivers with basic information"""
+  DriverList: JSONObject
+
+  """
+  Extrapolated session clock
+  
+  The extrapolated session clock returns the time in UTC (via the `Utc` field)
+  and the remaining time for this session (via the `Extrapolating` field),
+  and if the clock is still extrapolating (via the `Extrapolating` field). You
+  can use this data, along with the `liveTimingClock` field on the root query,
+  to calculate the time remaining in the session.
+  """
+  ExtrapolatedClock: JSONObject
+
+  """Heartbeats from the live timing server"""
+  Heartbeat: JSONObject
+
+  """Lap count, for sessions with a schedule number of laps"""
+  LapCount: JSONObject
+
+  """Time-series data per lap for each driver's position during the session"""
+  LapSeries: JSONObject
+
+  """Current or recent pit-stop timing data"""
+  PitLaneTimeCollection: JSONObject
+
+  """GPS positioning for cars and safety cars"""
+  Position: JSONObject
+
+  """Messages sent by FIA race control"""
+  RaceControlMessages: JSONObject
+
+  """
+  Simple session data, containing session status and start times for multi-part sessions (like Qualifying)
+  """
+  SessionData: JSONObject
+
+  """
+  Session information, including session type, circuit, official names and the scheduled start time
+  """
+  SessionInfo: JSONObject
+
+  """
+  The current session status (for which a time-series is available in the `SessionData` topic)
+  """
+  SessionStatus: JSONObject
+
+  """Team radio message captures"""
+  TeamRadio: JSONObject
+
+  """
+  Timing data for tyre stints, grid start positions, including tyre compound, best time set on it and the amount of laps run on it
+  """
+  TimingAppData: JSONObject
+
+  """
+  Most timing data available, including lap times, sector times, intervals/gaps, pitstop status, speed traps and number of laps run
+  """
+  TimingData: JSONObject
+
+  """
+  Statistics for the current session, best lap times, best sectors, best speeds
+  """
+  TimingStats: JSONObject
+
+  """Basic information about the top-three drivers in this session"""
+  TopThree: JSONObject
+
+  """The track status, which changes when yellow or red flags are out"""
+  TrackStatus: JSONObject
+
+  """Current weather data"""
+  WeatherData: JSONObject
+
+  """Historic weather data, for the current session"""
+  WeatherDataSeries: JSONObject
+}
+
+"""F1 live timing state"""
+type F1LiveTimingState {
+    """The status of the live timing archive, used for replay live timing"""
+  ArchiveStatus: JSONObject
+
+  """Available audio commentary streams"""
+  AudioStreams: JSONObject
+
+  """Car telemetry data, speed, throttle, brake, gear, RPM, DRS"""
+  CarData: JSONObject
+
+  """
+  Live championship standings, available for sessions where points are being awarded
+  """
+  ChampionshipPrediction: JSONObject
+
+  """Text-based content streams (via ScribbleLive) and audio commentary"""
+  ContentStreams: JSONObject
+
+  """List of all participating drivers with basic information"""
+  DriverList: JSONObject
+
+  """
+  Extrapolated session clock
+  
+  The extrapolated session clock returns the time in UTC (via the `Utc` field)
+  and the remaining time for this session (via the `Extrapolating` field),
+  and if the clock is still extrapolating (via the `Extrapolating` field). You
+  can use this data, along with the `liveTimingClock` field on the root query,
+  to calculate the time remaining in the session.
+  """
+  ExtrapolatedClock: JSONObject
+
+  """Heartbeats from the live timing server"""
+  Heartbeat: JSONObject
+
+  """Lap count, for sessions with a schedule number of laps"""
+  LapCount: JSONObject
+
+  """Time-series data per lap for each driver's position during the session"""
+  LapSeries: JSONObject
+
+  """Current or recent pit-stop timing data"""
+  PitLaneTimeCollection: JSONObject
+
+  """GPS positioning for cars and safety cars"""
+  Position: JSONObject
+
+  """Messages sent by FIA race control"""
+  RaceControlMessages: JSONObject
+
+  """
+  Simple session data, containing session status and start times for multi-part sessions (like Qualifying)
+  """
+  SessionData: JSONObject
+
+  """
+  Session information, including session type, circuit, official names and the scheduled start time
+  """
+  SessionInfo: JSONObject
+
+  """
+  The current session status (for which a time-series is available in the `SessionData` topic)
+  """
+  SessionStatus: JSONObject
+
+  """Team radio message captures"""
+  TeamRadio: JSONObject
+
+  """
+  Timing data for tyre stints, grid start positions, including tyre compound, best time set on it and the amount of laps run on it
+  """
+  TimingAppData: JSONObject
+
+  """
+  Most timing data available, including lap times, sector times, intervals/gaps, pitstop status, speed traps and number of laps run
+  """
+  TimingData: JSONObject
+
+  """
+  Statistics for the current session, best lap times, best sectors, best speeds
+  """
+  TimingStats: JSONObject
+
+  """Basic information about the top-three drivers in this session"""
+  TopThree: JSONObject
+
+  """The track status, which changes when yellow or red flags are out"""
+  TrackStatus: JSONObject
+
+  """Current weather data"""
+  WeatherData: JSONObject
+
+  """Historic weather data, for the current session"""
+  WeatherDataSeries: JSONObject
+}
+
+"""Clock information for the live timing"""
+type LiveTimingClock {
+    """Whether or not the clock is paused"""
+  paused: Boolean!
+
+  """The timestamp on the host computer that represents the `trackTime`"""
+  systemTime: BigInt!
+
+  """The timestamp at the track, at the time on the host computer"""
+  trackTime: BigInt!
+
+  """
+  Live timing start time, indicating the first recorded event's timestamp (track time)
+  """
+  liveTimingStartTime: BigInt!
+}
+
+"""Clock information for the live timing"""
+type F1LiveTimingClock {
+    """Whether or not the clock is paused"""
+  paused: Boolean!
+
+  """The timestamp on the host computer that represents the `trackTime`"""
+  systemTime: BigInt!
+
+  """The timestamp at the track, at the time on the host computer"""
+  trackTime: BigInt!
+
+  """
+  Live timing start time, indicating the first recorded event's timestamp (track time)
+  """
+  liveTimingStartTime: BigInt!
+}
+
+"""FIA WEC live timing state"""
+type FIAWECLiveTimingState {
+    """Car positions"""
+  positions: JSONObject
+
+  """Session data"""
+  session: JSONObject
+
+  """Race control messages"""
+  raceControl: JSONObject
+}
+
+"""A subscription"""
+type Subscription {
+    """The type of subscription"""
+  subscriptionType: SubscriptionType!
+
+  """The date the subscription expires (in seconds since the epoch)"""
+  expiresAt: Int
+
+  """
+  A JWT token that can be used to verify the subscription
+  
+  ### To verify:
+  
+  1. Retrieve the public key from https: //multiviewer.app/.well-known/subscription-verification-public-key.pub
+  2. Verify the signature using the public key
+  
+  ### Example (Node.js)
+  
+  ```ts
+  import { verify
+    } from "jsonwebtoken";
+  
+  // The public key can be retrieved from https://multiviewer.app/.well-known/subscription-verification-public-key.pub
+  const publicKey = "---BEGIN PUBLIC KEY---\n...\n---END PUBLIC KEY---";
+  
+  const verified = verify(token, publicKey,
+    {
+    algorithms: [
+            "RS256"
+        ],
+    issuer: "multiviewer.app",
+    });
+  ```
+  """
+  signature: String!
+}
+
+"""The type of subscription"""
+enum SubscriptionType {
+  F1TV_PREMIUM
+  F1TV_PRO
+  F1TV_ACCESS
+  F1_ACCESS
+}

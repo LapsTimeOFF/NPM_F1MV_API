@@ -8,7 +8,7 @@ export const baseURL = 'https://api.multiviewer.app/api/v1';
  * @param year - Year of the wanted documents
  */
 export async function getFIA_Documents(year: Year): Promise<object> {
-  const req = await fetch(`${baseURL}/fia-documents/${year}`);
+  const req = await fetch(`${baseURL}/fia/documents/f1/seasons/${year}`);
   const data = await req.json();
 
   return data;
@@ -21,7 +21,7 @@ export async function getFIA_Documents(year: Year): Promise<object> {
  */
 export async function getCircuitInfo(
   cicuitId: number,
-  year: Year
+  year: Year,
 ): Promise<object> {
   const req = await fetch(`${baseURL}/circuits/${cicuitId}/${year}`);
   const data = await req.json();

@@ -41,7 +41,7 @@ type AlwaysOnTopLevel =
 
 type ClockTopic = 'paused' | 'systemTime' | 'trackTime' | 'liveTimingStartTime';
 
-type Year = '2019' | '2020' | '2021' | '2022' | 2019 | 2020 | 2021 | 2022;
+type Year = '2019' | '2020' | '2021' | '2022' | '2023' | '2024' | '2025' | '2026' | 2019 | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 | 2026;
 
 type Bounds = {
   height?: number;
