@@ -10,7 +10,7 @@ import fetch from 'node-fetch';
  * @returns an object
  */
 export async function LiveTimingAPIV1(config: Config, topic: Topic) {
-  const data = await (
+  const data: any = await (
     await fetch(
       `http://${config.host}:${config.port}/api/v1/live-timing/${topic}`
     )
@@ -34,7 +34,7 @@ export async function LiveTimingAPIV2(
   config: Config,
   topic: Topic | Array<Topic>
 ) {
-  const data = await (
+  const data: any = await (
     await fetch(
       `http://${config.host}:${config.port}/api/v2/live-timing/state/${
         typeof topic === 'object' ? topic.join(',') : topic
@@ -50,8 +50,83 @@ export async function LiveTimingAPIV2(
 }
 
 /**
+ * Call the F1 Live Timing State via GraphQL
+ *
+ * @param config - the config object
+ * @param topic - a Topic or an Array<Topic>
+ * @returns an object
+ */
+export async function F1LiveTimingAPIGraphQL(
+  config: Config,
+  topic: Topic | Array<Topic>
+) {
+  const { data }: any = await (
+    await fetch(`http://${config.host}:${config.port}/api/graphql`, {
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: `query F1LiveTimingState {
+                            f1LiveTimingState {
+                                ${
+                                  typeof topic === 'object'
+                                    ? topic.join('\n')
+                                    : topic
+                                }
+                            }
+                        }`,
+        operationName: 'F1LiveTimingState',
+      }),
+      method: 'POST',
+    })
+  ).json();
+
+  if (data.success === false) {
+    return invalidTopic;
+  } else {
+    return data.f1LiveTimingState;
+  }
+}
+
+/**
+ * Call the F1 Live Timing Clock via GraphQL
+ *
+ * @param config - the config object
+ * @param topic - a ClockTopic or an Array<ClockTopic>
+ * @returns an object
+ */
+export async function F1LiveTimingClockAPIGraphQL(
+  config: Config,
+  topic: ClockTopic | Array<ClockTopic>
+) {
+  const { data }: any = await (
+    await fetch(`http://${config.host}:${config.port}/api/graphql`, {
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: `query F1LiveTimingClock {
+                            f1LiveTimingClock {
+                                ${
+                                  typeof topic === 'object'
+                                    ? topic.join('\n')
+                                    : topic
+                                }
+                            }
+                        }`,
+        operationName: 'F1LiveTimingClock',
+      }),
+      method: 'POST',
+    })
+  ).json();
+
+  if (data.success === false) {
+    return invalidTopic;
+  } else {
+    return data.f1LiveTimingClock;
+  }
+}
+
+/**
  * Call the Live Timing on GraphQL
  *
+ * @deprecated Use {@link F1LiveTimingAPIGraphQL} instead. The `liveTimingState` query field is deprecated in the MultiViewer GraphQL schema.
  * @param config - the config object
  * @param topic - a Topic or an Array<Topic>
  * @returns an object
@@ -60,70 +135,25 @@ export async function LiveTimingAPIGraphQL(
   config: Config,
   topic: Topic | Array<Topic>
 ) {
-  const { data } = await (
-    await fetch(`http://${config.host}:${config.port}/api/graphql`, {
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        query: `query LiveTimingState {
-                            liveTimingState {
-                                ${
-                                  typeof topic === 'object'
-                                    ? topic.join('\n')
-                                    : topic
-                                }
-                            }
-                        }`,
-        operationName: 'LiveTimingState',
-      }),
-      method: 'POST',
-    })
-  ).json();
-
-  if (data.success === false) {
-    return invalidTopic;
-  } else {
-    return data.liveTimingState;
-  }
+  return F1LiveTimingAPIGraphQL(config, topic);
 }
 
 /**
- * Call the Live Timing on GraphQL
+ * Call the Live Timing Clock on GraphQL
  *
+ * @deprecated Use {@link F1LiveTimingClockAPIGraphQL} instead. The `liveTimingClock` query field is deprecated in the MultiViewer GraphQL schema.
  * @param config - the config object
- * @param topic - a Topic or an Array<Topic>
+ * @param topic - a ClockTopic or an Array<ClockTopic>
  * @returns an object
  */
 export async function LiveTimingClockAPIGraphQL(
   config: Config,
   topic: ClockTopic | Array<ClockTopic>
 ) {
-  const { data } = await (
-    await fetch(`http://${config.host}:${config.port}/api/graphql`, {
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        query: `query LiveTimingClock {
-                            liveTimingClock {
-                                ${
-                                  typeof topic === 'object'
-                                    ? topic.join('\n')
-                                    : topic
-                                }
-                            }
-                        }`,
-        operationName: 'LiveTimingClock',
-      }),
-      method: 'POST',
-    })
-  ).json();
-
-  if (data.success === false) {
-    return invalidTopic;
-  } else {
-    return data.liveTimingClock;
-  }
+  return F1LiveTimingClockAPIGraphQL(config, topic);
 }
 
 // curl --request POST \
 //     --header 'content-type: application/json' \
 //     --url  \
-//     --data '{"query":"query ExampleQuery {\n  liveTimingState {\n    TrackStatus\n  }\n}"}'
+//     --data '{"query":"query ExampleQuery {\n  f1LiveTimingState {\n    TrackStatus\n  }\n}"}'
